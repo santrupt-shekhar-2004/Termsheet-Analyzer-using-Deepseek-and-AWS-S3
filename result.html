@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TermSheet Feature Finder</title>
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Chart.js for visualizations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header section with logo and app title -->
+    <header>
+        <div class="container">
+            <!-- Left side: Barclays logo -->
+            <div class="company-logo">
+                <img src="image/Barclays-Logo.wine.png" alt="Barclays">
+            </div>
+              
+            <!-- Center: Term Sheet Validator with document icon -->
+            <div class="logo">
+                <i class="fas fa-file-contract logo-icon"></i>
+                <h1>TermSheet Feature Finder</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content area -->
+    <main>
+        <!-- Dashboard header with actions -->
+        <section class="dashboard-container">
+            <div class="dashboard-header">
+                <h1 class="page-title">Dashboard</h1>
+
+                <div class="action-buttons">
+                    <!-- Upload button -->
+                    <button id="uploadBtn" class="btn btn-primary">
+                        <i class="fas fa-upload btn-icon"></i>
+                        Upload Document
+                    </button>
+    
+                    <!-- Export button -->
+                    <button id="exportBtn" class="btn btn-outline">
+                        <i class="fas fa-download btn-icon"></i>
+                        Export Report
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result container with tabs and content -->
+        <section class="result-container">
+            <!-- Client detail -->
+            <!--<div class="results-header">
+                <h1 class="Issuer">N/A</h1>
+                <p id="Client">N/A</p>
+            </div>-->
+
+            <!-- Tab navigation -->
+            <div class="tab">
+                <button class="tab-btn active" data-tab="overview">Overview</button>
+                <button class="tab-btn" data-tab="validation">Validation</button>
+                <!-- <button class="tab-btn" data-tab="feedback">Feedback</button> -->
+            </div>
+
+            <!-- Overview Tab Content -->
+            <div id="overviewTab" class="tab-content active">
+                <div class="overview-stats">
+                    <div class="stat-card">
+                        <h3>Key Dates</h3>
+                        <div class="detail-item">
+                            <span class="label">Trade Date:</span>
+                            <span class="value" id="TradeDate"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Value Date:</span>
+                            <span class="value" id="valueDate"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Expiry Date:</span>
+                            <span class="value" id="ExpiryDate"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Delivery Date:</span>
+                            <span class="value" id="DeliveryDate"></span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Financial Terms</h3>
+                        <div class="detail-item">
+                            <span class="label">Reference Spot Price:</span>
+                            <span class="value" id="Reference_Spot_Price"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Notional Amount:</span>
+                            <span class="value" id="Notional_Amount"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Strike Price:</span>
+                            <span class="value" id="Strike_Price"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Premium Rate:</span>
+                            <span class="value" id="Premium_Rate"></span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Option Details</h3>
+                        <div class="detail-item">
+                            <span class="label">Option Type:</span>
+                            <span class="value" id="Option_Type"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Business Calendar:</span>
+                            <span class="value" id="Business_Calendar"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Settlement Type:</span>
+                            <span class="value" id="Settlements_Type"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Settlement Method:</span>
+                            <span class="value" id="Settlements_Method"></span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Currencies</h3>
+                        <div class="detail-item">
+                            <span class="label">Transaction Currency:</span>
+                            <span class="value" id="Transaction_Currency"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Counter Currency:</span>
+                            <span class="value" id="Counter_Currency"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Validation Tab Content -->
+            <div id="validationTab" class="tab-content">
+                <div class="validation-card">
+                    <h2>Validation Report</h2>
+                    <div class="validation-table-container">
+                        <table id="validation-table">
+                            <thead>
+                                <tr>
+                                  <th>Parameter</th>
+                                  <th>Extracted Value</th>
+                                  <th>Master Sheet Value(s)</th>
+                                  <th>Status</th>
+                                  <th>DeepSeek Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Table rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="validation-overview">
+                    <h2>Validation Overview</h2>
+                    <div class="chart-container">
+                        <canvas id="validationDonutChart" width="400" height="400"></canvas>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-color valid-color"></span>
+                                <span class="legend-label">Valid</span>
+                                <span class="legend-count" id="validCount">0</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color invalid-color"></span>
+                                <span class="legend-label">Invalid</span>
+                                <span class="legend-count" id="invalidCount">0</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color review-color"></span>
+                                <span class="legend-label">Needs Review</span>
+                                <span class="legend-count" id="reviewCount">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </section>
+    </main>
+
+    <!-- Footer section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TermSheet Feature Finder. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Loading overlay for async operations -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Processing your request...</p>
+    </div>
+
+    <!-- JavaScript -->
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- Your custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

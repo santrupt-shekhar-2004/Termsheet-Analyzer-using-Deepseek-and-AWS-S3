@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TermSheet Feature Finder</title>
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header section with logo and app title -->
+    <header>
+        <div class="container">
+            <!-- Left side: Barclays logo -->
+            <div class="company-logo">
+                <img src="image/Barclays-Logo.wine.png" alt="Barclays">
+            </div>
+              
+            <!-- Center: Term Sheet Validator with document icon -->
+            <div class="logo">
+                <i class="fas fa-file-contract logo-icon"></i>
+                <h1>TermSheet Feature Finder</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content area -->
+    <main>
+        <!-- Hero section with main heading and description -->
+        <section class="hero">
+            <div class="container">
+                <h1>TermSheet Feature Finder</h1>
+                <p>Extract and analyze key features from your financial term sheet document</p>
+                
+                <!-- Document upload options -->
+                <div class="upload-options">
+                    <button class="upload-btn" id="uploadBtn">
+                      <i class="fas fa-upload"></i>
+                      Upload Document
+                    </button>
+                    <button class="email-btn" id="emailBtn">
+                      <i class="fas fa-envelope"></i>
+                      Access from Email
+                    </button>
+                    <button class="chat-btn" id="chatBtn">
+                      <i class="fas fa-comments"></i>
+                      Access from Chat
+                    </button>
+                  </div>
+                  
+                  <!-- In the email/chat sections -->
+                  <!-- <button type="submit" class="btn-primary full-width">
+                    <i class="fas fa-file-contract"></i>
+                    Access Termsheet
+                  </button> -->
+            </div>
+        </section>
+
+        <!-- Upload document section -->
+        <section class="upload-section" id="uploadSection">
+            <div class="container">
+                <div class="upload-card">
+                    <h2>Upload TermSheet Document</h2>
+                    <p>Upload a PDF or DOCX file containing your term sheet</p>
+                    
+                    <div class="upload-area" id="dropZone">
+                        <i class="fas fa-upload"></i>
+                        <p>Drag and drop your TermSheet file</p>
+                        <p class="small-text">Or click to browse (PDF or DOCX)</p>
+                        <input type="file" id="fileInput" accept=".pdf,.docx" hidden>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Email access section (hidden by default) -->
+        <section class="email-section" id="emailSection" style="display: none;">
+            <div class="container">
+                <div class="email-card">
+                    <h2>Access TermSheet from Email</h2>
+                    <p>Provide your email credentials and termsheet ID to access it directly</p>
+                    
+                    <form id="emailForm">
+                        <div class="form-group">
+                            <label for="emailAddress">Email Address</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="emailAddress" placeholder="your.email@example.com" required>
+                            </div>
+                            <p class="form-hint">Email address containing the termsheet</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" placeholder="••••••••" required>
+                                <i class="fas fa-eye toggle-password"></i>
+                            </div>
+                            <p class="form-hint">Your email password (secure and not stored)</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="termsheetId">Termsheet ID or Subject</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-file-alt"></i>
+                                <input type="text" id="termsheetId" placeholder="TS-12345 or email subject" required>
+                            </div>
+                            <p class="form-hint">ID or subject line to identify the termsheet</p>
+                        </div>
+                        
+                        <!-- In the email/chat sections -->
+                        <button type="submit" class="btn-primary full-width">
+                            <i class="fas fa-file-contract"></i>
+                                Access Termsheet
+                        </button>
+                        <p class="security-note">Your credentials are used only to access the termsheet and are never stored.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chat access section (hidden by default) -->
+        <section class="chat-section" id="chatSection" style="display: none;">
+            <div class="container">
+                <div class="chat-card">
+                    <h2>Access TermSheet from Chat</h2>
+                    <p>Provide your phone number to access termsheet shared via chat</p>
+                    
+                    <form id="chatForm">
+                        <div class="form-group" id="phoneNumberGroup">
+                            <label for="phoneNumber">Phone Number</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phoneNumber" placeholder="+1 (XXX) XXX-XXXX" required>
+                            </div>
+                            <p class="form-hint">Phone number associated with the termsheet</p>
+        
+                            <button type="button" class="btn-primary full-width" id="otpGenerateBtn">
+                                <i class="fas fa-key"></i>
+                                Generate OTP
+                            </button>
+                        </div>
+                        
+                        <div class="form-group" id="otpGroup" style="display: none;">
+                            <label for="otp">OTP</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="otp" placeholder="••••••" required>
+                                <i class="fas fa-eye toggle-otp"></i>
+                            </div>
+                            <p class="form-hint">One-time password sent to your phone</p>
+                            <p id="otpTimer" style="display: none; color: var(--warning-color); font-size: 0.9rem;"></p>                        </div>
+                        
+                        <div class="form-group">
+                            <label for="chatTermsheetId">Termsheet ID or Reference</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-file-alt"></i>
+                                <input type="text" id="chatTermsheetId" placeholder="TS-12345 or reference" required>
+                            </div>
+                            <p class="form-hint">ID or reference to identify the termsheet</p>
+                        </div>
+                            
+                        <button type="submit" class="btn-primary full-width" id="chatSubmitBtn">
+                            <i class="fas fa-file-contract"></i>
+                            Access Termsheet
+                        </button>
+                        <p class="security-note">Your information is used only to access the termsheet and is never stored.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+       
+        <!-- Features section -->
+        <section class="features-section">
+            <div class="container">
+                <h2>Key Features Extracted</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Basic Details</h3>
+                        <p>Issuer, security name, issue size, face value, credit rating</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Instrument Characteristics</h3>
+                        <p>Instrument type, tenor, coupon rate, payment frequency</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>Key Dates & Options</h3>
+                        <p>Issue dates, call options, redemption conditions</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Regulatory Compliance</h3>
+                        <p>Regulatory aspects, listing venues, eligible investors</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TermSheet Feature Finder. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Loading overlay for async operations -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Processing your TermSheet...</p>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
